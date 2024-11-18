@@ -5,6 +5,7 @@ function createCanvas(size){
     for(let i = 0; i < size * size; i++){
         const pixel = document.createElement("div")
         pixel.classList.add("pixel");
+        pixel.classList.add("grid");
         pixel.style.flexGrow = "1";
         pixel.style.flexBasis = `calc(100% / ${size})`
         pixel.addEventListener("mouseover", () => {
@@ -16,13 +17,40 @@ function createCanvas(size){
     return canvas;
 }
 
-mainContent = document.querySelector("#main-content")
 let canvas = createCanvas(16);
 
+mainContent = document.querySelector("#main-content");
+
+const pageTitle = document.createElement("h1");
+pageTitle.textContent = "Etch - a - Sketch";
+
+const checkBoxGroup = document.createElement("div");
+checkBoxGroup.id = "checkBoxGroup";
+
+const gridCheckBox = document.createElement("input");
+gridCheckBox.type = "checkbox";
+gridCheckBox.id = "grid-check-box";
+gridCheckBox.checked = true;
+
+gridCheckBox.addEventListener("change", () => {
+    canvas.querySelectorAll(".pixel").forEach(childElement => {
+        childElement.classList.toggle("grid");
+    });
+})
+
+const gridCheckBoxLabel = document.createElement("label");
+gridCheckBoxLabel.textContent = "Enable Grid: "
+gridCheckBox.for = "grid-check-box";
+
+checkBoxGroup.appendChild(gridCheckBoxLabel);
+checkBoxGroup.appendChild(gridCheckBox);
+
+
 const canvasSizeRange = document.createElement('input');
+canvasSizeRange.classList.add("canvas-size-range");
 canvasSizeRange.type = 'range';
 canvasSizeRange.min = '1';
-canvasSizeRange.max = '16';
+canvasSizeRange.max = '50';
 canvasSizeRange.value = '16';
 
 canvasSizeRange.addEventListener("input", () => {
@@ -31,5 +59,8 @@ canvasSizeRange.addEventListener("input", () => {
     canvas = newCanvas;
 })
 
+
+mainContent.appendChild(pageTitle);
 mainContent.appendChild(canvas);
+mainContent.appendChild(checkBoxGroup);
 mainContent.appendChild(canvasSizeRange);
