@@ -45,7 +45,6 @@ gridCheckBox.for = "grid-check-box";
 checkBoxGroup.appendChild(gridCheckBoxLabel);
 checkBoxGroup.appendChild(gridCheckBox);
 
-
 const canvasSizeRange = document.createElement('input');
 canvasSizeRange.classList.add("canvas-size-range");
 canvasSizeRange.type = 'range';
@@ -53,14 +52,19 @@ canvasSizeRange.min = '1';
 canvasSizeRange.max = '50';
 canvasSizeRange.value = '16';
 
+const canvasSizeRangeInfo = document.createElement("p");
+canvasSizeRangeInfo.textContent = `${canvasSizeRange.value} x ${canvasSizeRange.value}`;
+
 canvasSizeRange.addEventListener("input", () => {
     const newCanvas = createCanvas(canvasSizeRange.value);
     canvas.replaceWith(newCanvas);
     canvas = newCanvas;
+    canvasSizeRangeInfo.textContent = `${canvasSizeRange.value} x ${canvasSizeRange.value}`;
 })
 
 
 mainContent.appendChild(pageTitle);
 mainContent.appendChild(canvas);
-mainContent.appendChild(checkBoxGroup);
+mainContent.appendChild(canvasSizeRangeInfo);
 mainContent.appendChild(canvasSizeRange);
+mainContent.appendChild(checkBoxGroup);
